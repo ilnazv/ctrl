@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { authenticateAnonymously } from './services/firestoreService';
-import { Game } from './Game';
 import { Controller } from './Controller';
+import { GamePage } from './GamePage';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -17,7 +16,7 @@ function App() {
 
   const content = useMemo(() => {
     if (mode === 0) {
-      return <Game />;
+      return <GamePage />;
     }
 
     if (mode === 1) {

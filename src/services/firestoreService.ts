@@ -1,4 +1,5 @@
 import firebase from "firebase";
+import { Keys } from "../Models";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -25,10 +26,10 @@ export const getList = () => {
         .get();
 };
 
-export const subscribeToList = (processData: (docs: { id: string, name: string }[]) => void) => {
+export const subscribeToList = (processData: (docs: { id: string, name: Keys }[]) => void) => {
     return db.collection('list')
         .orderBy('id', 'desc').onSnapshot((snapshot) => {
-            processData(snapshot.docs.map(d => d.data() as { id: string, name: string }));
+            processData(snapshot.docs.map(d => d.data() as { id: string, name: Keys }));
         });
 }
 
