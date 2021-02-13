@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { addListItem, clearList } from "./services/firestoreService";
 
 const buttonStyle = {
-    padding: 10
+    padding: 30
 };
 
 export function Controller(): JSX.Element {
@@ -12,9 +12,11 @@ export function Controller(): JSX.Element {
 
     return <>
         <button style={buttonStyle} type="button" onClick={() => addMove('up')}>Up</button>
-        <button style={buttonStyle} type="button" onClick={() => addMove('down')}>Down</button>
-        <button style={buttonStyle} type="button" onClick={() => addMove('left')}>Left</button>
-        <button style={buttonStyle} type="button" onClick={() => addMove('right')}>Right</button>
+        <div>
+            <button style={buttonStyle} type="button" onClick={() => addMove('left')}>Left</button>
+            <button style={buttonStyle} type="button" onClick={() => addMove('down')}>Down</button>
+            <button style={buttonStyle} type="button" onClick={() => addMove('right')}>Right</button>
+        </div>
         <button style={{
             marginTop: 50
         }} type="button" onClick={() => clearList()}>Clear</button>
