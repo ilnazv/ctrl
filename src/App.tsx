@@ -1,23 +1,42 @@
-import React from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { authenticateAnonymously } from './services/firestoreService';
+import { Game } from './Game';
+import { Controller } from './Controller';
 
 function App() {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    authenticateAnonymously().then((a) => {
+      setLoaded(true);
+    });
+  });
+
+  const [mode, setMode] = useState(2);
+
+  const content = useMemo(() => {
+    if (mode === 0) {
+      return <Game />;
+    }
+
+    if (mode === 1) {
+      return <Controller />;
+    }
+
+    return <><h2>Choose mode:</h2>
+      <button type='button' onClick={() => setMode(0)}>Game</button>
+      <button type='button' onClick={() => setMode(1)}>Controller</button>
+    </>;
+  }, [mode]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button type='button' onClick={() => setMode(2)}>Back</button>
+        {loaded && <>
+          {content}
+        </>}
       </header>
     </div>
   );
