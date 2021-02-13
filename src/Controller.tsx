@@ -17,8 +17,5 @@ export function Controller(): JSX.Element {
             <button style={buttonStyle} type="button" onClick={() => addMove('down')}>Down</button>
             <button style={buttonStyle} type="button" onClick={() => addMove('right')}>Right</button>
         </div>
-        <button style={{
-            marginTop: 50
-        }} type="button" onClick={() => clearList()}>Clear</button>
     </>;
 }
