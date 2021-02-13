@@ -8,27 +8,30 @@ interface GameShellProps {
 }
 
 export function GameShell({ canvasSize }: GameShellProps): JSX.Element {
+    const [game, setGame] = useState<Game>();
+
     const canvasRef = useCallback((element: HTMLCanvasElement) => {
         if (!element) {
             return;
         }
         const ctx = element.getContext("2d") as CanvasRenderingContext2D;
-        const game = new Game(ctx, canvasSize, 50);
-        game.start(true);
-        subscribeToList(data => {
-            if (data.length) {
-                game.handleKey(data[0].name);
-            }
-        });
+        const newGame = new Game(ctx, canvasSize, 50);
+        setGame(newGame);
+        newGame.start(true);
     }, []);
 
 
-    // useEffect(() => {
-    //     const subscription = subscribeToList(data => {
-    //         setList(data);
-    //     });
-    //     return subscription;
-    // }, []);
+    useEffect(() => {
+        const subscription = subscribeToList(data => {
+            if (data.length) {
+                game?.handleKey(data[0].name);
+            }
+        });
+        return () => {
+            subscription();
+            game?.stop();
+        };
+    }, []);
 
 
     return (
